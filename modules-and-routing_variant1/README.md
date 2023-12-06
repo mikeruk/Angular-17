@@ -1,7 +1,7 @@
-    #Modules
+    Modules
     Modules are standalone. 
 
-    #Routing
+    Routing
 source:
 https://stackoverflow.com/questions/38832851/angular-routerlink-does-not-navigate-to-the-corresponding-component - see last answer from Nov 10 at 6:24
 https://angular.io/guide/router-reference
