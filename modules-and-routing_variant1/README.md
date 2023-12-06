@@ -1,27 +1,42 @@
-# ModulesAndRouting
+    #Modules
+    Modules are standalone. 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+    #Routing
+source:
+https://stackoverflow.com/questions/38832851/angular-routerlink-does-not-navigate-to-the-corresponding-component - see last answer from Nov 10 at 6:24
+https://angular.io/guide/router-reference
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This is Variant 1 to add routing in HTML file:
+<div>   
+      //Here are some addtional attributes, but routerLinkActive and ariaCurrentWhenActive is not always required.
+    <a class="nav-btn" routerLink="/user-list" routerLinkActive="active" ariaCurrentWhenActive="page">Users List</a>
+    <a class="nav-btn" routerLink="/todo-list" routerLinkActive="active" ariaCurrentWhenActive="page">Todos List</a>
+</div>
+To make those routerLink="/user-list" (above) active and actually working, do this:
+    
+1. After you have added a Routing Module on App level, if you add this module on a sub-component, the browser will return error. Therefore DO NOT ADD THE WHOLE ROUNTING MODULE TO ANY SUBCOMPONENT!!!
+2. To get routing functionality import only certain class from the '@angular/router', but no need to import the whole Routing module in a sub-module.
+3. Example with a NavigationComponent. In its .html file the NavigationComponent needs to use attributes like routerLink="" OR routerLinkActive="" OR ariaCurrentWhenActive="". The solution is to add only those Classes separately in the NavigationComponent, but not to add the whole RoutingModule
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    This is how it works:
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+@Component({
+  selector: 'app-navigation',
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive],
+  templateUrl: './navigation.component.html',
+  styleUrl: './navigation.component.css'
+})
+export class NavigationComponent {
+}
 
-## Running unit tests
+#In other words, if a component needs to implement in the .html file any classes, those classes can be also added indivudually in the same component. Especially when it comes for routing, because the RoutingModule cannot be added to a sub-component.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
