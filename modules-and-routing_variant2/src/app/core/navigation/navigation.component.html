@@ -1,0 +1,36 @@
+<p>navigation works!</p>
+
+<!--        Varinart 1:       -->
+<!-- 
+    source:
+    https://stackoverflow.com/questions/38832851/angular-routerlink-does-not-navigate-to-the-corresponding-component - see last answer from Nov 10 at 6:24
+
+    https://angular.io/guide/router-reference
+-->
+<div>
+  <!--     <div class="nav-btn" routerLink="/user-list" >Users List</div>
+    <div class="nav-btn" routerLink="/todo-list">Todos List</div> -->
+
+  <!--     
+    Here are some addtional attributes, but as you see above, routing works even without them!
+    <a class="nav-btn" routerLink="/user-list" routerLinkActive="active" ariaCurrentWhenActive="page">Users List</a>
+    <a class="nav-btn" routerLink="/todo-list" routerLinkActive="active" ariaCurrentWhenActive="page">Todos List</a> -->
+</div>
+
+
+
+
+
+<!--        Varinart 2:       
+    We navigate programatically, meaning:
+    1. First, instead of importing the html attribute routerLink="", we only inject the Router class in the constructor of NavigationComponent.
+    2. Second, we call the .navigate([path]) function from that router instance
+    3. Here in the HTML tag we pass the [path] string as Array.
+    4. That's all!
+    NB!! The Main Router Module remains the same and we do not import it in the Navigation Module. 
+
+-->
+<div>
+  <div class="nav-btn" (click)="navigateTo('/user-list')">Users List</div>
+  <div class="nav-btn" (click)="navigateTo('/todo-list')">Todos List</div> 
+</div>
