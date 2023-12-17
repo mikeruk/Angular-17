@@ -1,0 +1,69 @@
+<div appHighlightOnMove>Hello, Directives</div>
+<hr />
+<nav>
+  <div appMyRouterLink="/login">Link to Login</div>
+  <div appMyRouterLink="/register">Link to Register</div>
+</nav>
+<hr />
+
+<!-- NB!!! Custom Structural Directives: -->
+<!-- FIRST -->
+
+<!-- This is the standard BUILT-IN directive *ngIf="". 
+STRUCTURAL DIRECTIVES ARE ALWAYS WITH * PREFIX, as below:
+-->
+<hr />
+<div *ngIf="true">Simple Div 1</div>
+
+<!--
+    Writing the directive *ngIf="true" directly in any HTML Tag, as above (we use * symbol to access the ng-template inside)
+IS THE SAME AS 
+writing the directive in its standard wrapper <ng-template [ngIf]="true">,
+    AS BELOW:                                                           -->
+
+<!-- SECOND -->
+<!-- My CUSTOM made directive *ngIf="" 
+At this point I have written only this code below works, but the </ng-template> works and
+ displays the [ngIf]="true" in the browser !!
+-->
+<ng-template [ngIf]="true">
+  <div>Simple Div 1.1</div>
+</ng-template>
+
+<!-- THIRD -->
+<!-- We want our STRUCTURAL DIRECTOVE to work with this "SHOW" button -->
+<button (click)="toggle()">toggle my state</button>
+<!-- After writing this <div> below, generate a directive on the cli: ng g d my-structural -->
+<div *appMyStructural="isShown">Structural directives (Usage 1)</div>
+<!--Now open the file of the new directive and use its SELECTOR selector: '[appMyStructural]' and put it above 
+    in the upper <div> tag.  -->
+
+    <!--Now, lets implement the wrapper of our custom structural directive, by using its SELECTOR only like below.
+    And we will see that pressing the toggle button above hides/and shows also this <div> element below: -->    
+<ng-template [appMyStructural]="isShown" let-value="value" let-val>
+  <div>Structural Directives (Usage 2)</div>
+  <h4>value: {{value}} OR {{val}}</h4><!-- {{value}} comes from let-value="value" AND {{val}} comes from  'let-val' attribute.  -->
+</ng-template>
+
+
+<!-- FOURTH:
+the we can even refer to the whole HTML ready markup and get access to the variables in it by using ' #appMyStructural', like this: -->
+<ng-template [appMyStructural]="isShown" let-value="value" let-val  #appMyStructural>
+    <div>Structural Directives (Usage 3)</div>
+    <h4>value: {{value}} OR {{val}}</h4><!-- {{value}} comes from let-value="value" AND {{val}} comes from  'let-val' attribute.  -->
+  </ng-template>
+
+
+
+  <!-- FIFTH: 
+we use reference to the template with  -->
+  
+<ng-template #tmp>
+    <div>Structural Directives (Usage 4)</div>
+  </ng-template>
+<!--But when we work with 'ng-container' as below, we need to use ID reference 'tmp', 
+because the container TAG does not get access to the Directive Class directly, but can get the info by referencing 
+ <ng-template #tmp> -->
+<ng-container [appMyStructural]="isShown" [myTmpProp]="tmp"/>
+
+<router-outlet></router-outlet>
